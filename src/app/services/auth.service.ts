@@ -42,6 +42,10 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
+  clearToken(): void {
+    localStorage.removeItem(this.tokenKey);
+  }
+
   isAuthenticated(): boolean {
     return !!this.getToken();
   }
