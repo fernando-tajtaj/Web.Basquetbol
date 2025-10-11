@@ -1,0 +1,351 @@
+<div class="container mt-4">
+  <h2>{{ isEdit ? 'Editar Partido' : 'Crear Partido' }}</h2>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <!-- Fecha y hora -->
+    <div class="mb-3">
+      <label for="datetime" class="form-label">Fecha y hora</label>
+      <input
+        id="datetime"
+        type="datetime-local"
+        class="form-control"
+        formControlName="datetime"
+        [readonly]="isEdit"
+      />
+      <div
+        *ngIf="form.controls['datetime'].invalid && form.controls['datetime'].touched"
+        class="text-danger"
+      >
+        Debe seleccionar fecha y hora
+      </div>
+    </div>
+
+    <!-- Equipos -->
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="uuidTeamHome" class="form-label">Equipo Local</label>
+        <select
+          id="uuidTeamHome"
+          class="form-select"
+          formControlName="uuidTeamHome"
+          [disabled]="isEdit"
+        >
+          <option value="">Seleccione un equipo</option>
+          <option *ngFor="let team of teams" [value]="team.uuid">{{ team.name }}</option>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <label for="uuidTeamAway" class="form-label">Equipo Visitante</label>
+        <select
+          id="uuidTeamAway"
+          class="form-select"
+          formControlName="uuidTeamAway"
+          [disabled]="isEdit"
+        >
+          <option value="">Seleccione un equipo</option>
+          <option *ngFor="let team of teams" [value]="team.uuid">{{ team.name }}</option>
+        </select>
+      </div>
+    </div>
+    <div *ngIf="form.errors?.['sameTeam']" class="text-danger mb-3">
+      El equipo local y el visitante no pueden ser el mismo
+    </div>
+
+    <!-- Estado -->
+    <div class="mb-3">
+      <label for="uuidStatus" class="form-label">Estado del partido</label>
+      <select id="uuidStatus" class="form-select" formControlName="uuidStatus">
+        <option *ngFor="let state of status" [value]="state.uuid">{{ state.name }}</option>
+      </select>
+    </div>
+
+    <!-- Marcador (solo en modo edición) -->
+    <div *ngIf="isEdit">
+      <div class="card shadow-sm mb-4">
+        <div class="card-header bg-light text-dark text-center py-3">
+          <h6 class="mb-0">Marcador del Partido</h6>
+        </div>
+        <div class="card-body p-4">
+          <!-- Marcadores de equipos -->
+          <div class="row g-4 mb-4">
+            <!-- Equipo Local -->
+            <div class="col-lg-6">
+              <div class="card border-warning shadow-sm h-100">
+                <div class="card-header bg-warning text-center py-3">
+                  <h4 class="mb-0 fw-bold">LOCAL</h4>
+                </div>
+                <div class="card-body text-center">
+                  <!-- Puntos -->
+                  <div class="mb-4">
+                    <label class="text-muted small mb-2 d-block">PUNTOS</label>
+                    <div class="display-1 fw-bold text-warning mb-3">
+                      {{ form.value.scoreHome }}
+                    </div>
+                    <div class="btn-group" role="group">
+                      <button
+                        type="button"
+                        class="btn btn-outline-warning btn-lg"
+                        (click)="decrementScore('home', 1)"
+                      >
+                        -1
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-warning btn-lg"
+                        (click)="incrementScore('home', 1)"
+                      >
+                        +1
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-warning btn-lg"
+                        (click)="incrementScore('home', 2)"
+                      >
+                        +2
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-warning btn-lg"
+                        (click)="incrementScore('home', 3)"
+                      >
+                        +3
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Faltas -->
+                  <div class="border-top pt-3">
+                    <label class="text-muted small mb-2 d-block">FALTAS</label>
+                    <div class="d-flex align-items-center justify-content-center gap-3">
+                      <button
+                        type="button"
+                        class="btn btn-outline-dark score-control"
+                        (click)="decrementFoul('home')"
+                      >
+                        <fa-icon [icon]="faMinus"></fa-icon>
+                      </button>
+
+                      <span class="fw-bold score-value" style="font-size: 28px">
+                        {{ form.value.foulHome }}
+                      </span>
+
+                      <button
+                        type="button"
+                        class="btn btn-outline-warning score-control"
+                        (click)="incrementFoul('home')"
+                      >
+                        <fa-icon [icon]="faPlus"></fa-icon>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Equipo Visitante -->
+            <div class="col-lg-6">
+              <div class="card border-dark shadow-sm h-100">
+                <div class="card-header bg-dark text-white text-center py-3">
+                  <h4 class="mb-0 fw-bold">VISITANTE</h4>
+                </div>
+                <div class="card-body text-center">
+                  <!-- Puntos -->
+                  <div class="mb-4">
+                    <label class="text-muted small mb-2 d-block">PUNTOS</label>
+                    <div class="display-1 fw-bold text-dark mb-3">
+                      {{ form.value.scoreAway }}
+                    </div>
+                    <div class="btn-group" role="group">
+                      <button
+                        type="button"
+                        class="btn btn-outline-dark btn-lg"
+                        (click)="decrementScore('away', 1)"
+                      >
+                        -1
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-dark btn-lg"
+                        (click)="incrementScore('away', 1)"
+                      >
+                        +1
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-dark btn-lg"
+                        (click)="incrementScore('away', 2)"
+                      >
+                        +2
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-dark btn-lg"
+                        (click)="incrementScore('away', 3)"
+                      >
+                        +3
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Faltas -->
+                  <div class="border-top pt-3">
+                    <label class="text-muted small mb-2 d-block">FALTAS</label>
+                    <div class="d-flex align-items-center justify-content-center gap-3">
+                      <button
+                        type="button"
+                        class="btn btn-outline-dark score-control"
+                        (click)="decrementFoul('away')"
+                      >
+                        <fa-icon [icon]="faMinus"></fa-icon>
+                      </button>
+
+                      <span class="fw-bold score-value" style="font-size: 28px">
+                        {{ form.value.foulAway }}
+                      </span>
+
+                      <button
+                        type="button"
+                        class="btn btn-outline-warning score-control"
+                        (click)="incrementFoul('away')"
+                      >
+                        <fa-icon [icon]="faPlus"></fa-icon>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Cuarto -->
+          <div class="card border-dark shadow-sm">
+            <div class="card-body text-center py-4">
+              <label class="text-muted small mb-2 d-block">CUARTO</label>
+              <div class="d-flex align-items-center justify-content-center gap-3">
+                <button
+                  type="button"
+                  class="btn btn-outline-warning btn-lg"
+                  (click)="decrementQuarter()"
+                  [disabled]="form.value.quarter <= 0"
+                >
+                  <i class="bi bi-chevron-left"></i> Anterior
+                </button>
+                <div class="display-4 fw-bold text-dark px-4">
+                  {{ form.value.quarter }}
+                </div>
+                <button
+                  type="button"
+                  class="btn btn-outline-dark btn-lg"
+                  (click)="incrementQuarter()"
+                  [disabled]="form.value.quarter >= 4"
+                >
+                  Siguiente <i class="bi bi-chevron-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Jugadores disponibles (solo en modo creación) -->
+    <div *ngIf="!isEdit" class="row mb-3">
+      <div class="col-md-6">
+        <h6>Jugadores Locales</h6>
+        <div class="card mb-2" *ngFor="let player of homePlayers">
+          <div class="card-body d-flex justify-content-between align-items-center p-2">
+            <span>{{ player.fullName }} ({{ player.position?.description }})</span>
+            <div class="d-flex align-items-center gap-2">
+              <select class="form-select form-select-sm w-auto" #starter>
+                <option [value]="true">Titular</option>
+                <option [value]="false">Suplente</option>
+              </select>
+              <button
+                type="button"
+                class="btn btn-sm btn-warning"
+                (click)="
+                  addPlayerToMatch(player, starter.value === 'true', form.value.uuidTeamHome)
+                "
+                [disabled]="isPlayerSelected(player.uuid)"
+              >
+                Agregar
+              </button>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="homePlayers.length === 0" class="text-muted small">
+          Sin jugadores disponibles
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <h6>Jugadores Visitantes</h6>
+        <div class="card mb-2" *ngFor="let player of awayPlayers">
+          <div class="card-body d-flex justify-content-between align-items-center p-2">
+            <span>{{ player.fullName }} ({{ player.position?.description }})</span>
+            <div class="d-flex align-items-center gap-2">
+              <select class="form-select form-select-sm w-auto" #starterAway>
+                <option [value]="true">Titular</option>
+                <option [value]="false">Suplente</option>
+              </select>
+              <button
+                type="button"
+                class="btn btn-sm btn-dark"
+                (click)="
+                  addPlayerToMatch(player, starterAway.value === 'true', form.value.uuidTeamAway)
+                "
+                [disabled]="isPlayerSelected(player.uuid)"
+              >
+                Agregar
+              </button>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="awayPlayers.length === 0" class="text-muted small">
+          Sin jugadores disponibles
+        </div>
+      </div>
+    </div>
+
+    <!-- Jugadores seleccionados -->
+    <div class="mt-3">
+      <h5>Jugadores en el Partido</h5>
+
+      <div *ngIf="matchPlayersArray.length === 0" class="alert alert-light">
+        No hay jugadores seleccionados
+      </div>
+
+      <div *ngFor="let mp of matchPlayersArray.controls; let i = index" class="card mb-2">
+        <div class="card-body d-flex justify-content-between align-items-center">
+          <div>
+            <strong>{{ mp.value.name }}</strong
+            ><br />
+            <small class="text-muted">
+              {{ mp.value.position?.description }} -
+              {{ mp.value.isStarter ? 'Titular' : 'Suplente' }} -
+              {{ mp.value.teamName }}
+            </small>
+          </div>
+
+          <button
+            *ngIf="!isEdit"
+            type="button"
+            class="btn btn-sm btn-dark"
+            (click)="removePlayerFromMatch(mp.value.uuidPlayer)"
+          >
+            Eliminar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-4">
+      <button type="submit" class="btn btn-warning me-2" [disabled]="form.invalid">
+        {{ isEdit ? 'Actualizar Partido' : 'Guardar Partido' }}
+      </button>
+      <button type="button" class="btn btn-dark" (click)="router.navigate(['/matches'])">
+        Cancelar
+      </button>
+    </div>
+  </form>
+</div>

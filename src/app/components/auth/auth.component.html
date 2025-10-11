@@ -1,0 +1,62 @@
+<div class="login-page">
+  <!-- Card de login -->
+  <div class="login-card">
+    <div class="mb-4">
+      <fa-icon class="basket-icon" [icon]="faBasketball" />
+      <h2 class="login-title">Basket Web App</h2>
+    </div>
+    <form class="d-grid gap-3" [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="form-floating">
+        <input
+          id="username"
+          class="form-control"
+          type="text"
+          placeholder="Usuario"
+          formControlName="username"
+          required
+        />
+        <label for="username">Usuario</label>
+      </div>
+      <div class="form-floating">
+        <input
+          id="password"
+          class="form-control"
+          type="password"
+          formControlName="password"
+          placeholder="Contraseña"
+          required
+        />
+        <label for="password">Contraseña</label>
+      </div>
+      <div class="d-flex justify-content-center mt-2">
+        <button type="submit" class="btn btn-warning flex-fill me-1">Ingresar</button>
+        <button type="button" class="btn btn-dark flex-fill ms-1" (click)="onToRegister()">
+          Registrarse
+        </button>
+      </div>
+      <div class="position-fixed top-0 end-0 p-3" style="z-index: 1050" *ngIf="error">
+        <div class="toast show align-items-center text-bg-danger border-0" role="alert">
+          <div class="d-flex">
+            <div class="toast-body">
+              {{ error }}
+            </div>
+            <button
+              type="button"
+              class="btn-close btn-close-white me-2 m-auto"
+              (click)="error = ''"
+            ></button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- GIF a la derecha -->
+  <div class="login-gif">
+    <img
+      src="https://i.pinimg.com/originals/2a/a0/48/2aa048617d716a49009062d09f133e31.gif"
+      alt="Basketball Animation"
+      style="width: 400px; border-radius: 15px"
+    />
+  </div>
+</div>

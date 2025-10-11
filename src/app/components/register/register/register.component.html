@@ -1,0 +1,102 @@
+<div class="login-page">
+  <!-- Card de registro -->
+  <div class="login-card">
+    <div class="mb-4">
+      <fa-icon class="basket-icon" [icon]="faBasketball" />
+      <h2 class="login-title">Registro de Usuario</h2>
+    </div>
+
+    <form class="d-grid gap-3" [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="form-floating">
+        <input
+          id="firstName"
+          class="form-control"
+          type="text"
+          placeholder="Nombre"
+          formControlName="firstName"
+          required
+        />
+        <label for="firstName">Nombre</label>
+      </div>
+
+      <div class="form-floating">
+        <input
+          id="lastName"
+          class="form-control"
+          type="text"
+          placeholder="Apellido"
+          formControlName="lastName"
+          required
+        />
+        <label for="lastName">Apellido</label>
+      </div>
+
+      <div class="form-floating">
+        <input
+          id="userName"
+          class="form-control"
+          type="text"
+          placeholder="Usuario"
+          formControlName="userName"
+          required
+        />
+        <label for="userName">Usuario</label>
+      </div>
+
+      <div class="form-floating position-relative">
+        <input
+          [type]="showPassword ? 'text' : 'password'"
+          id="password"
+          class="form-control"
+          placeholder="Contraseña"
+          formControlName="password"
+          required
+        />
+        <label for="password">Contraseña</label>
+
+        <button
+          type="button"
+          class="btn btn-sm btn-outline-secondary position-absolute top-50 end-0 translate-middle-y me-2"
+          (click)="togglePasswordVisibility()"
+        >
+          <fa-icon [icon]="showPassword ? faEyeSlash : faEye"></fa-icon>
+        </button>
+      </div>
+
+      <div class="d-flex justify-content-center mt-2">
+        <button type="submit" class="btn btn-warning flex-fill me-1">Registrar</button>
+        <button type="button" class="btn btn-dark flex-fill ms-1" (click)="goToLogin()">
+          Volver
+        </button>
+      </div>
+
+      <div class="position-fixed top-0 end-0 p-3" style="z-index: 1050" *ngIf="alertMessage">
+        <div
+          class="toast show align-items-center border-0"
+          [ngClass]="alertType === 'success' ? 'text-bg-success' : 'text-bg-danger'"
+          role="alert"
+        >
+          <div class="d-flex">
+            <div class="toast-body">
+              {{ alertMessage }}
+            </div>
+            <button
+              type="button"
+              class="btn-close btn-close-white me-2 m-auto"
+              (click)="alertMessage = ''"
+            ></button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- GIF a la derecha -->
+  <div class="login-gif">
+    <img
+      src="https://i.pinimg.com/originals/2a/a0/48/2aa048617d716a49009062d09f133e31.gif"
+      alt="Basketball Animation"
+      style="width: 400px; border-radius: 15px"
+    />
+  </div>
+</div>

@@ -1,0 +1,48 @@
+<div class="card p-4">
+  <h3>{{ isEdit ? 'Editar Equipo' : 'Crear Equipo' }}</h3>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label for="name" class="form-label">Nombre</label>
+      <input type="text" id="name" formControlName="name" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+      <label for="uuidCity" class="form-label">Ciudad</label>
+      <select id="uuidCity" formControlName="uuidCity" class="form-select">
+        <option value="">-- Seleccione una ciudad --</option>
+        <option *ngFor="let city of cities" [value]="city.uuid">{{ city.name }}</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="logo" class="form-label">Logo del equipo</label>
+      <input
+        type="file"
+        class="form-control"
+        id="logo"
+        formControlName="logo"
+        (change)="onFileSelected($event)"
+      />
+
+      <div class="mt-2 position-relative d-inline-block" *ngIf="logoPreview">
+        <img [src]="getLogoSrc()" alt="Logo Preview" width="200" class="rounded" />
+
+        <button
+          type="button"
+          class="btn btn-sm btn-dark position-absolute top-0 end-0 p-1"
+          (click)="removeLogo()"
+        >
+          &times;
+        </button>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-warning me-2" [disabled]="form.invalid">
+      {{ isEdit ? 'Actualizar' : 'Crear' }}
+    </button>
+    <button type="button" class="btn btn-dark" (click)="router.navigate(['/team'])">
+      Cancelar
+    </button>
+  </form>
+</div>

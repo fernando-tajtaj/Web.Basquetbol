@@ -1,0 +1,85 @@
+<div class="container my-4">
+  <h2 class="mb-4 text-dark">Reportes</h2>
+
+  <form class="mb-3" (submit)="$event.preventDefault(); onConsult()">
+    <div class="row g-3 align-items-end">
+      <div class="col-md-4">
+        <label class="form-label fw-bold">Tipo de reporte</label>
+        <select
+          [(ngModel)]="uuidReport"
+          name="reportType"
+          class="form-select"
+          (ngModelChange)="onReportChange()"
+        >
+          <option value="" disabled selected>Seleccione un reporte</option>
+          <option *ngFor="let t of reportsBaseDto" [value]="t.uuid">
+            {{ t.type + ' - ' + t.description }}
+          </option>
+        </select>
+      </div>
+
+      <div class="col-md-2">
+        <label class="form-label fw-bold">Desde</label>
+        <input type="date" [(ngModel)]="dateFrom" name="dateFrom" class="form-control" />
+      </div>
+
+      <div class="col-md-2">
+        <label class="form-label fw-bold">Hasta</label>
+        <input type="date" [(ngModel)]="dateTo" name="dateTo" class="form-control" />
+      </div>
+
+      <div class="col-md-4">
+        <label class="form-label fw-bold">Búsqueda</label>
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          name="searchTerm"
+          class="form-control"
+          placeholder="Nombre, equipo, etc."
+        />
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-end gap-2 mt-3">
+      <button type="button" class="btn btn-warning" (click)="onConsult()" [disabled]="loading">
+        Consultar
+      </button>
+      <button type="button" class="btn btn-dark" (click)="onClear()" [disabled]="loading">
+        Limpiar
+      </button>
+      <button type="button" class="btn btn-light" (click)="onDownloadPdf()" [disabled]="!hasData">
+        <i class="bi bi-file-earmark-pdf me-1"></i> Descargar PDF
+      </button>
+    </div>
+  </form>
+
+  <div *ngIf="loading" class="alert alert-info text-center">
+    <div class="spinner-border spinner-border-sm me-2" role="status"></div>
+    Cargando datos...
+  </div>
+
+  <div *ngIf="!loading && error" class="alert alert-danger text-center">
+    {{ error }}
+  </div>
+
+  <div *ngIf="!loading && !error && !hasData" class="alert alert-light text-center">
+    No hay datos para mostrar.
+  </div>
+
+  <div class="table-responsive mt-3" *ngIf="!loading && !error && hasData">
+    <table class="table align-middle">
+      <thead class="table-light">
+        <th *ngFor="let c of columns" class="text-center">
+          {{ c }}
+        </th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of data">
+          <td *ngFor="let c of columns" class="text-center">
+            {{ row[c] }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

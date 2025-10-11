@@ -1,0 +1,57 @@
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h2>Equipos</h2>
+  <button class="btn btn-warning" (click)="create()">+ Nuevo Equipo</button>
+</div>
+
+<ng-container *ngIf="hasTeams; else emptyTable">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <input
+      type="text"
+      class="form-control w-25"
+      placeholder="Buscar por nombre o ciudad"
+      [(ngModel)]="searchTerm"
+      (ngModelChange)="onSearch()"
+    />
+  </div>
+
+  <table class="table text-center">
+    <thead>
+      <tr>
+        <th>Logo</th>
+        <th>Nombre</th>
+        <th>Ciudad</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let team of filteredTeams">
+        <td>
+          <img
+            [src]="getLogoUrl(team.logo)"
+            alt="logo"
+            width="100"
+            height="100"
+            style="border-radius: 50%; object-fit: cover; border: 1px solid #ccc"
+          />
+        </td>
+        <td>{{ team.name }}</td>
+        <td>{{ team.city?.name }}</td>
+        <td>
+          <button class="btn btn-warning btn-sm me-2" (click)="edit(team.uuid)">
+            <fa-icon [icon]="faPencil" size="1x"></fa-icon>
+          </button>
+          <button class="btn btn-dark btn-sm" (click)="delete(team.uuid)">
+            <fa-icon [icon]="faTrash" size="1x"></fa-icon>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</ng-container>
+
+<ng-template #emptyTable>
+  <div class="text-center py-5">
+    <fa-icon [icon]="faBoxOpen" size="3x" class="text-muted"></fa-icon>
+    <p class="text-muted mt-3 fs-5">No hay equipos disponibles</p>
+  </div>
+</ng-template>

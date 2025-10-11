@@ -1,0 +1,87 @@
+<nav class="navbar navbar-expand-lg">
+  <div class="container-fluid d-flex justify-content-between align-items-center">
+    <!-- Logo -->
+    <a class="navbar-brand d-flex align-items-center" routerLink="/home">
+      <fa-icon class="basket-icon me-2" [icon]="faBasketball"></fa-icon>
+    </a>
+
+    <ul class="navbar-nav mb-2 mb-lg-0">
+      <li class="nav-item">
+        <a
+          class="nav-link d-flex align-items-center"
+          routerLink="/home"
+          [ngClass]="{ 'fw-bold': isActive('/home') }"
+        >
+          <fa-icon [icon]="faHome" class="me-1"></fa-icon> Inicio
+        </a>
+      </li>
+      <li class="nav-item" *ngIf="isAdmin()">
+        <a
+          class="nav-link d-flex align-items-center"
+          routerLink="/admin"
+          [ngClass]="{ 'fw-bold': isActive('/admin') }"
+        >
+          <fa-icon [icon]="faUserShield" class="me-1"></fa-icon> Administración
+        </a>
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link d-flex align-items-center"
+          routerLink="/team"
+          [ngClass]="{ 'fw-bold': isActive('/team') }"
+        >
+          <fa-icon [icon]="faUsers" class="me-1"></fa-icon> Equipos
+        </a>
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link d-flex align-items-center"
+          routerLink="/player"
+          [ngClass]="{ 'fw-bold': isActive('/player') }"
+        >
+          <fa-icon [icon]="faBasketball" class="me-1"></fa-icon> Jugadores
+        </a>
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link d-flex align-items-center"
+          routerLink="/match"
+          [ngClass]="{ 'fw-bold': isActive('/match') }"
+        >
+          <fa-icon [icon]="faTrophy" class="me-1"></fa-icon> Partidos
+        </a>
+      </li>
+      <li class="nav-item" *ngIf="isAdmin()">
+        <a
+          class="nav-link d-flex align-items-center"
+          routerLink="/report"
+          [ngClass]="{ 'fw-bold': isActive('/report') }"
+        >
+          <fa-icon [icon]="faFileText" class="me-1"></fa-icon> Reportes
+        </a>
+      </li>
+    </ul>
+
+    <!-- Dropdown de usuario al extremo derecho -->
+    <div class="dropdown">
+      <button
+        class="btn btn-dark dropdown-toggle"
+        type="button"
+        id="userDropdown"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        Bienvenido, {{ userName }}
+      </button>
+
+      <ul class="dropdown-menu dropdown-menu-end w-100" aria-labelledby="userDropdown">
+        <li>
+          <a class="dropdown-item d-flex align-items-center" (click)="logout()">
+            <fa-icon [icon]="faSignOut" class="me-2"></fa-icon>
+            Cerrar sesión
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

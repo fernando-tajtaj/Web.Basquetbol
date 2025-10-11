@@ -1,0 +1,58 @@
+<!-- player-create.component.html -->
+<div class="card p-4">
+  <h3>{{ isEdit ? 'Editar Jugador' : 'Crear Jugador' }}</h3>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label for="uuidTeam" class="form-label">Equipo</label>
+      <select id="uuidTeam" formControlName="uuidTeam" class="form-select">
+        <option *ngFor="let team of teams" [value]="team.uuid">{{ team.name }}</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="fullName" class="form-label">Nombre completo</label>
+      <input type="text" id="fullName" formControlName="fullName" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+      <label for="number" class="form-label">Número</label>
+      <input type="number" id="number" formControlName="number" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+      <label for="uuidPosition" class="form-label">Posición</label>
+      <select id="uuidPosition" formControlName="uuidPosition" class="form-select">
+        <option *ngFor="let position of positions" [value]="position.uuid">
+          {{ position.description }}
+        </option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="height" class="form-label">Altura</label>
+      <input type="number" id="height" formControlName="height" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+      <label for="age" class="form-label">Edad</label>
+      <input type="number" id="age" formControlName="age" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+      <label for="uuidNationality" class="form-label">Nacionalidad</label>
+      <select id="uuidNationality" formControlName="uuidNationality" class="form-select">
+        <option *ngFor="let nationality of nationalities" [value]="nationality.uuid">
+          {{ nationality.description }}
+        </option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-warning me-2" [disabled]="form.invalid">
+      {{ isEdit ? 'Actualizar' : 'Crear' }}
+    </button>
+    <button type="button" class="btn btn-dark" (click)="router.navigate(['/player'])">
+      Cancelar
+    </button>
+  </form>
+</div>
