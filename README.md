@@ -1,59 +1,90 @@
-# WebBasquetbol
+# Web Basquetbol (Angular)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.2.2.
+Aplicación web en Angular para gestionar entidades relacionadas con básquetbol (equipos, jugadores, partidos y reportes). El proyecto usa Angular 20, Bootstrap 5 y JWT para autenticación.
 
-## Development server
+## Requisitos
 
-To start a local development server, run:
+- Node.js 20+ (recomendado 22)
+- npm 10+
+- Angular CLI (`npm i -g @angular/cli`) opcional para usar `ng` globalmente
 
-```bash
-ng serve
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Instalación
 
 ```bash
-ng generate component component-name
+npm install
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Desarrollo
+
+Iniciar el servidor de desarrollo:
 
 ```bash
-ng generate --help
+npm start   # o: ng serve
 ```
 
-## Building
+Abrir `http://localhost:4200/`. Recarga automática al guardar cambios.
 
-To build the project run:
+## Scripts npm
+
+- `npm start`: arranca el dev server.
+- `npm run build`: compila para producción a `dist/Web.Basquetbol`.
+- `npm run watch`: compila en modo desarrollo con watch.
+- `npm test`: ejecuta pruebas unitarias (Karma/Jasmine).
+
+## Configuración de API y Auth
+
+- Base de API: ajustar `Global.url` en `src/app/services/global.ts`. Por defecto: `/api`.
+- Autenticación: el token JWT se guarda en `localStorage` y el interceptor (`src/app/interceptors/auth.interceptor.ts`) adjunta `Authorization: Bearer <token>` a cada petición. Ante `401` se limpia sesión y redirige a `/login`.
+
+## Construcción para producción
 
 ```bash
-ng build
+npm run build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Salida en `dist/Web.Basquetbol`. Se habilita `outputHashing` y optimizaciones en `production`.
 
-## Running unit tests
+## Docker (Build y Run)
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+El proyecto incluye un `Dockerfile` multi-stage que construye Angular y sirve con Nginx.
 
 ```bash
-ng test
+# Construir imagen
+docker build -t web-basquetbol .
+
+# Ejecutar contenedor
+docker run --rm -p 8080:80 web-basquetbol
 ```
 
-## Running end-to-end tests
+- La app quedará disponible en `http://localhost:8080`.
+- Nginx usa `nginx.conf` con `try_files` para SPA. Si el backend está detrás del mismo dominio bajo `/api`, asegúrate de exponerlo o de configurar el proxy inverso correspondiente.
 
-For end-to-end (e2e) testing, run:
+## Pruebas
+
+Unitarias (Karma/Jasmine):
 
 ```bash
-ng e2e
+npm test
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Este proyecto no incluye e2e por defecto; puedes integrar la herramienta de tu preferencia.
 
-## Additional Resources
+## Estructura del proyecto (resumen)
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- `src/app/components`: componentes de UI (home, admin, navbar, auth, etc.).
+- `src/app/pages`: módulos de páginas (team, player, match, report, admin).
+- `src/app/services`: servicios para `auth`, `team`, `player`, `match`, `report`, etc.
+- `src/app/models/dto`: DTOs de dominio (team, player, match, status, city, nationality, login).
+- `src/app/interceptors`: interceptor de autenticación JWT.
+- `src/app/core`: guards (`auth-guard`, `role.guard`).
+- `public`: assets estáticos (p.ej. `favicon.ico`).
+
+## Notas de despliegue
+
+- La salida estática puede servirse en cualquier hosting web (Nginx/Apache/CDN).
+- Para Nginx, el `nginx.conf` incluido ya maneja rutas de SPA y sirve desde `/usr/share/nginx/html`.
+- Si tu API vive en otro host/origen, configura CORS en el backend o usa un proxy.
+
+## Referencias
+
+- Angular CLI: https://angular.dev/tools/cli

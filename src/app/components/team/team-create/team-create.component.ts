@@ -72,9 +72,9 @@ export class TeamCreateComponent {
     if (this.logoFile) {
       return this.logoPreview!;
     } else if (this.logoUrlFromServer) {
-      return `http://localhost:5000${this.logoUrlFromServer}`;
+      return this.logoUrlFromServer;
     }
-    return ''; // placeholder o vacío
+    return '';
   }
 
   getCities(): void {

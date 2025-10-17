@@ -58,7 +58,7 @@ export class MatchListComponent {
               return matches.map((m, index) => {
                 const homeTeam = teamResults[index * 2];
                 const awayTeam = teamResults[index * 2 + 1];
-                const baseUrl = 'http://localhost:5000';
+                const baseUrl = '';
 
                 return {
                   ...m,
@@ -77,10 +77,6 @@ export class MatchListComponent {
   }
 
   loadTeam(): void {}
-
-  getTeamLogo(filename: string): string {
-    return `http://localhost:5000/${filename}`;
-  }
 
   get hasPlayers(): boolean {
     return this.matches && this.matches.length > 0;

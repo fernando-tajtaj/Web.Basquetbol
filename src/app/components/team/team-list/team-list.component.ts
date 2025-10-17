@@ -35,7 +35,7 @@ export class TeamListComponent implements OnInit {
   }
 
   getLogoUrl(filename: string): string {
-    return `http://localhost:5000${filename}`;
+    return filename;
   }
 
   loadTeams(): void {
