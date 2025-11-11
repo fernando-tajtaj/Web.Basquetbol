@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Login } from '../models/dto/login/login';
-import { LoginResponseDto } from '../models/dto/login/login-response-dto';
+import { Login } from '../../models/dto/login/login';
+import { LoginResponseDto } from '../../models/dto/login/login-response-dto';
 import { HttpClient } from '@angular/common/http';
-import { Global } from './global';
+import { Global } from './../global';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -35,6 +35,11 @@ export class AuthService {
         role: loginResponseDto.user?.role,
       })
     );
+  }
+
+  beginOAuth(provider: string): void {
+    const target = `${this.url}/auth/${provider}`;
+    window.location.assign(target);
   }
 
   logout(): void {

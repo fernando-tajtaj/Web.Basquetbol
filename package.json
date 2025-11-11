@@ -33,6 +33,7 @@
     "@fortawesome/angular-fontawesome": "^3.0.0",
     "@fortawesome/fontawesome-svg-core": "^7.0.1",
     "@fortawesome/free-solid-svg-icons": "^7.0.1",
+    "angular-oauth2-oidc": "^20.0.2",
     "bootstrap": "^5.3.8",
     "jspdf": "^3.0.3",
     "jspdf-autotable": "^5.0.2",

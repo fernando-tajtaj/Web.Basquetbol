@@ -12,7 +12,7 @@ import { PlayerService } from '../../../services/player/player.service';
 import { PlayerCreateDto } from '../../../models/dto/player/player-create-dto';
 import { PlayerUpdateDto } from '../../../models/dto/player/player-update-dto';
 import { TeamReadDto } from '../../../models/dto/team/team-read-dto';
-import { AuthService } from '../../../services/auth.service';
+import { AuthService } from '../../../services/auth/auth.service';
 import { TeamService } from '../../../services/team/team.service';
 import { PositionReadDto } from '../../../models/dto/position/position-read-dto';
 import { NationalityReadDto } from '../../../models/dto/nationality/nationality-read-dto';

@@ -13,7 +13,7 @@ import {
   faFileText,
 } from '@fortawesome/free-solid-svg-icons';
 
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-navbar',

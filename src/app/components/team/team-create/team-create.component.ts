@@ -11,7 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CityReadDto } from '../../../models/dto/city/city-read-dto';
 import { TeamCreateDto } from '../../../models/dto/team/team-create-dto';
 import { TeamUpdateDto } from '../../../models/dto/team/team-update-dto';
-import { AuthService } from '../../../services/auth.service';
+import { AuthService } from '../../../services/auth/auth.service';
 import { TeamService } from '../../../services/team/team.service';
 import { CityService } from '../../../services/city/city.service';
 

@@ -34,6 +34,22 @@
           Registrarse
         </button>
       </div>
+      <div class="d-flex justify-content-center mt-3">
+        <button
+          type="button"
+          class="btn btn-outline-danger w-100"
+          (click)="loginWithGoogle()"
+          style="display: flex; align-items: center; justify-content: center; gap: 8px"
+        >
+          <img
+            src="https://developers.google.com/identity/images/g-logo.png"
+            alt="Google Logo"
+            width="20"
+            height="20"
+          />
+          Iniciar sesión con Google
+        </button>
+      </div>
       <div class="position-fixed top-0 end-0 p-3" style="z-index: 1050" *ngIf="error">
         <div class="toast show align-items-center text-bg-danger border-0" role="alert">
           <div class="d-flex">

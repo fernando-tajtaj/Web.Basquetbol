@@ -19,7 +19,7 @@ import { TeamReadDto } from '../../../models/dto/team/team-read-dto';
 import { PlayerReadDto } from '../../../models/dto/player/player-read-dto';
 import { MatchCreateDto } from '../../../models/dto/match/match-create-dto';
 import { MatchUpdateDto } from '../../../models/dto/match/match-update-dto';
-import { AuthService } from '../../../services/auth.service';
+import { AuthService } from '../../../services/auth/auth.service';
 import { StatusService } from '../../../services/status/status.service';
 import { TeamService } from '../../../services/team/team.service';
 import { MatchService } from '../../../services/match/match.service';

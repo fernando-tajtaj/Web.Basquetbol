@@ -5,10 +5,12 @@ import { AuthComponent } from './components/auth/auth.component';
 import { HomeComponent } from './components/home/home.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { RegisterComponent } from './components/register/register/register.component';
+import { AuthCallbackComponent } from './components/auth-callback/auth-callback.component';
 
 export const routes: Routes = [
   { path: 'login', component: AuthComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'auth/callback', component: AuthCallbackComponent },
 
   {
     path: '',

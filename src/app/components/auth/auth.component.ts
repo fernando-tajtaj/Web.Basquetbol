@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../services/auth/auth.service';
 import { Login } from '../../models/dto/login/login';
 import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -51,6 +51,10 @@ export class AuthComponent {
         this.showError('Credenciales inválidas.');
       },
     });
+  }
+
+  loginWithGoogle() {
+    this.authService.beginOAuth('google');
   }
 
   onToRegister() {
