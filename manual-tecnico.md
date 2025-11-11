@@ -88,3 +88,7 @@ Este proyecto no incluye e2e por defecto; puedes integrar la herramienta de tu p
 ## Referencias
 
 - Angular CLI: https://angular.dev/tools/cli
+
+## Manual de Usuario
+
+Para una guía orientada a usuarios finales (inicio de sesión, marcador, reportes y administración), consulta el archivo `manual-usuario.md` en la raíz del proyecto.
