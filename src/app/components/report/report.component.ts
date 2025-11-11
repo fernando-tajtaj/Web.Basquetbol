@@ -32,7 +32,6 @@ export class ReportComponent implements OnInit {
   constructor(private reportService: ReportService) {}
 
   ngOnInit(): void {
-    this.data && this.data.length > 0;
     this.loadReports();
   }
 
